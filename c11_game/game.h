@@ -30,6 +30,7 @@ void mostrarHistorial(void);
 void options();
 void wait_second();
 int isEqual(char s1[],char s2[]);
+void coloresPermitidos(void);
 
 char colores[NUM_COLORES] = {'V', 'R', 'A', 'M', 'N', 'C'};
 char combinacion[TAM_COMBINACION + 1];
@@ -38,6 +39,9 @@ int num_jugadas = 1;
 Jugador jugadores[MAX_JUGADORES];
 int num_jugadores = 0;
 
+inline void coloresPermitidos(void) {
+    printf("\nV=Verde  R=Rojo A=Amarillo M=Morado C=Cafe N=Naranja)");
+}
 inline void obtenerRespuesta(char combinacion[], char intento[], int *aciertos_posicion, int *aciertos_color) {
     int i, j;
     *aciertos_posicion = 0;
@@ -119,11 +123,11 @@ inline int isEqual(char s1[],char s2[]) {
 }
 
 inline void options() {
-    printf("\n\t__________________________OPCIONES __________\n\n");
-    printf("\t A) INICIAR JUEGO \n\n");
+    printf("\n\t_____ OPCIONES  ___________\n\n");
+    printf("\t A) INICIAR JUEGO. \n\n");
     printf("\t B) JUGADORES Y ESTADISTICAS.\n\n");
-    printf("\t C) INSTRUCCIONES DEL JUEGO\n");
-    printf("\n\t____________________________________________\n\n");
+    printf("\t C) INSTRUCCIONES. \n");
+    printf("\n\t___________________________\n");
 }
 
 inline void wait_second() {
@@ -132,7 +136,7 @@ inline void wait_second() {
     getchar();
 }
 
-void generarCombinacion(char combinacion[]) {
+inline void generarCombinacion(char combinacion[]) {
     srand(time(NULL));
     for (int i = 0; i < TAM_COMBINACION; i++) {
         combinacion[i] = colores[rand() % NUM_COLORES];
@@ -140,15 +144,15 @@ void generarCombinacion(char combinacion[]) {
     combinacion[TAM_COMBINACION] = '\0'; // Terminador de cadena
 }
 
-void mostrarHistorial(void) {
+inline void mostrarHistorial(void) {
     printf("\nHistorial de jugadas:\n");
     for (int i = 0; i < num_jugadas; i++) {
         printf("%s\n", history[i]);
     }
 }
 
-void agregar_jugador() {
-    printf("---- > NUEVO JUGADOR \n");
+inline void agregar_jugador() {
+    printf("---- > REGISTRATE PARA JUGAR. \n");
     if (num_jugadores < MAX_JUGADORES) {
         printf("Nombre: ");
         fgets(jugadores[num_jugadores].nombre, MAX_NOMBRE, stdin);
@@ -156,14 +160,11 @@ void agregar_jugador() {
         printf("Intentos permitidos: ");
         scanf("%d", &jugadores[num_jugadores].intentos);
         num_jugadores++;
-
         while (getchar() != '\n') {
         }
     } else {
-        printf("Ya se ha alcanzado el máximo de jugadores.\n");
+        printf("Máximo de jugadores.\n");
     }
     mostrarJugadores(jugadores,num_jugadores);
 }
-
-
 #endif //GAME_H
