@@ -7,7 +7,7 @@
 
 char combinacion[TAM_COMBINACION + 1];
 char history[MAX_HISTORIAL][TAM_COMBINACION + 1];
-int num_jugadas = 0;
+int num_jugadas = 1;
 Jugador jugadores[MAX_JUGADORES];
 int num_jugadores = 0;
 
@@ -32,7 +32,6 @@ void agregar_jugador() {
         printf("Nombre: ");
         fgets(jugadores[num_jugadores].nombre, MAX_NOMBRE, stdin);
         jugadores[num_jugadores].nombre[strcspn(jugadores[num_jugadores].nombre, "\n")] = '\0';
-        // Eliminar el salto de línea al final del nombre
         printf("Intentos permitidos: ");
         scanf("%d", &jugadores[num_jugadores].intentos);
         num_jugadores++;
@@ -42,15 +41,16 @@ void agregar_jugador() {
     } else {
         printf("Ya se ha alcanzado el máximo de jugadores.\n");
     }
+    mostrarJugadores(jugadores,num_jugadores);
 }
 
 void play(void) {
     agregar_jugador();
-    printf("Welcome: %s\n", jugadores[num_jugadores].nombre);
+    int intentos = 3;
+    printf("Welcome: %s", jugadores[num_jugadores-1].nombre);
+    printf("\nCuantos intentos limite?:");
+    scanf("%d", &intentos);
     int aciertos_posicion = 0, aciertos_color = 0;
-    if (jugadores[num_jugadores].intentos == 0) {
-        jugadores[num_jugadores].intentos = 3;
-    }
     do {
         char option_selected[TAM_COMBINACION + 1];
         printf("\n%s", combinacion);
@@ -77,10 +77,9 @@ void play(void) {
             jugadores[num_jugadores].intentos = MAX_INTENTOS - num_jugadas;
             jugadores[num_jugadores].aciertos_posicion = aciertos_posicion;
             jugadores[num_jugadores].aciertos_color = aciertos_color;
-            num_jugadores++;
             break;
         }
-    } while (num_jugadas <= jugadores[num_jugadores].intentos);
+    } while (num_jugadas <= intentos);
     printf("\nhas agotado todos tus intentos. La combinación : %s\n", combinacion);
 }
 

@@ -60,7 +60,7 @@ inline void registrarJugada(char historial[][TAM_COMBINACION+1], char intento[],
 inline void mostrarJugadores(Jugador jugadores[], int num_jugadores) {
     printf("\nEstadísticas de jugadores:\n");
     for (int i = 0; i < num_jugadores; i++) {
-        printf("Jugador: %s - Intentos restantes: %d - Aciertos de posición: %d - Aciertos de color: %d\n",
+        printf("Jugador:[%i] %s - Intentos restantes: %d - Aciertos de posición: %d - Aciertos de color: %d\n",i,
                jugadores[i].nombre, jugadores[i].intentos, jugadores[i].aciertos_posicion, jugadores[i].aciertos_color);
     }
 }
