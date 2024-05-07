@@ -31,29 +31,31 @@ void agregar_jugador() {
     if (num_jugadores < MAX_JUGADORES) {
         printf("Nombre: ");
         fgets(jugadores[num_jugadores].nombre, MAX_NOMBRE, stdin);
-        jugadores[num_jugadores].nombre[strcspn(jugadores[num_jugadores].nombre, "\n")] = '\0';  // Eliminar el salto de línea al final del nombre
+        jugadores[num_jugadores].nombre[strcspn(jugadores[num_jugadores].nombre, "\n")] = '\0';
+        // Eliminar el salto de línea al final del nombre
         printf("Intentos permitidos: ");
         scanf("%d", &jugadores[num_jugadores].intentos);
         num_jugadores++;
 
-        while (getchar() != '\n') {}
+        while (getchar() != '\n') {
+        }
     } else {
         printf("Ya se ha alcanzado el máximo de jugadores.\n");
     }
 }
 
 void play(void) {
-   agregar_jugador();
+    agregar_jugador();
     printf("Welcome: %s\n", jugadores[num_jugadores].nombre);
     int aciertos_posicion = 0, aciertos_color = 0;
-    if(jugadores[num_jugadores].intentos == 0) {
+    if (jugadores[num_jugadores].intentos == 0) {
         jugadores[num_jugadores].intentos = 3;
     }
-     do {
+    do {
         char option_selected[TAM_COMBINACION + 1];
-         printf("\n%s",combinacion);
+        printf("\n%s", combinacion);
         printf("\nV=Verde  R=Rojo A=Amarillo M=Morado C=Cafe N=Naranja)");
-         printf("\nJugada %d --> :" ,num_jugadas);
+        printf("\nJugada %d --> :", num_jugadas);
         scanf("\n%s", option_selected);
 
         if (!validarEntrada(option_selected)) {
@@ -78,39 +80,36 @@ void play(void) {
             num_jugadores++;
             break;
         }
-    } while(num_jugadas <= jugadores[num_jugadores].intentos);
+    } while (num_jugadas <= jugadores[num_jugadores].intentos);
     printf("\nhas agotado todos tus intentos. La combinación : %s\n", combinacion);
 }
 
 int main() {
-
-    generarCombinacion(combinacion);
-    printf("\n%s",combinacion);
-    while(1) {
+    while (1) {
+        generarCombinacion(combinacion);
+        printf("\n%s", combinacion);
         char opt[2];
         options();
         printf("\nElige una opcion:");
         scanf("\n%s", opt);
-
-        if(isEqual(opt,"A") || isEqual(opt,"a")) {
+        if (isEqual(opt, "A") || isEqual(opt, "a")) {
             wait_second();
             play();
         }
-        if(isEqual(opt,"B") || isEqual(opt,"b")) {
+        if (isEqual(opt, "B") || isEqual(opt, "b")) {
             wait_second();
             printf("\nLa combinación correcta es: %s\n", combinacion);
             mostrarJugadores(jugadores, num_jugadores);
             mostrarHistorial();
         }
-        if(isEqual(opt,"C") || isEqual(opt,"c")) {
+        if (isEqual(opt, "C") || isEqual(opt, "c")) {
             wait_second();
             mostrarInstrucciones();
         }
-        if(isEqual(opt,"D") || isEqual(opt,"d") || isEqual(opt,"0")) {
+        if (isEqual(opt, "D") || isEqual(opt, "d") || isEqual(opt, "0")) {
             break;
         }
     }
     wait_second();
     return 0;
 }
-
