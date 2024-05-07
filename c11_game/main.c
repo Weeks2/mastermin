@@ -30,6 +30,19 @@ int validateIfContinue(char option_selected[5]) {
     return 0;
 }
 
+int evaluation12(char option_selected[5]) {
+    if(isEqual("salir",option_selected)) {
+        return 1;
+    }
+    if(isEqual("historia",option_selected)) {
+        mostrarHistorial();
+    }
+    if(isEqual("trampa",option_selected)) {
+        printf("\n%s", combinacion);
+    }
+    return 0;
+}
+
 void play(void) {
     agregar_jugador();
     int intentos = 3;
@@ -40,19 +53,23 @@ void play(void) {
     int aciertos_posicion = 0, aciertos_color = 0;
     do {
         char option_selected[TAM_COMBINACION + 1];
-        printf("\n%s", combinacion);
         coloresPermitidos();
         printf("\nJugada %d --> :", num_jugadas);
         scanf("\n%s", option_selected);
-
-        if (validateIfContinue(option_selected)) continue;
-
+        if (evaluation12(option_selected)) {
+            break;
+        }
+        if (validateIfContinue(option_selected)) {
+            continue;
+        }
         obtenerRespuesta(combinacion, option_selected, &aciertos_posicion, &aciertos_color);
         registrarJugada(history, option_selected, aciertos_posicion, aciertos_color, &num_jugadas);
         printf("Aciertos de posición: %d\n", aciertos_posicion);
         printf("Aciertos de color: %d\n", aciertos_color);
+        if (completeIfWinner(location, aciertos_posicion, aciertos_color)) {
+            break;
+        }
 
-        if (completeIfWinner(location, aciertos_posicion, aciertos_color)) break;
 
     } while (num_jugadas <= intentos);
     printf("\nIntentos agotados. La combinación : %s\n", combinacion);
